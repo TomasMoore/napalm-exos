@@ -18,7 +18,6 @@ Napalm driver for Extreme EXOS.
 Read https://napalm.readthedocs.io for more information.
 """
 from napalm.base.base import NetworkDriver
-from napalm.base.utils import py23_compat
 from netmiko import ConnectHandler, SCPConn
 from napalm.base.helpers import textfsm_extractor
 
@@ -331,22 +330,22 @@ class ExosDriver(NetworkDriver):
         # if template_path is None, then it loads to running config. Otherwise it assume an absolute filesystem location.
         # e.g. /usr/local/cfg
 
-        if isinstance(template_source, py23_compat.string_types):
+        #if isinstance(template_source, py23_compat.string_types):
             # Load and render template to string.
-            configuration = jinja2.Template(template_source).render(**template_vars)
+            #configuration = jinja2.Template(template_source).render(**template_vars)
 
-            policy_file = self._create_temp_file(configuration, "pol", name=policy_name)
+            #policy_file = self._create_temp_file(configuration, "pol", name=policy_name)
 
             # transfer to device.
-            self._transfer_file_scp(policy_file, policy_name + ".pol")
+            #self._transfer_file_scp(policy_file, policy_name + ".pol")
 
             # Check the policy
-            check_command = "check policy " + policy_name
-            check_output = self.cli([check_command])
+            #check_command = "check policy " + policy_name
+            #check_output = self.cli([check_command])
 
-            if "successful" not in check_output[check_command]:
-                raise ValueError
-            else:
-                return configuration
-        else:
+            #if "successful" not in check_output[check_command]:
+                #raise ValueError
+            #else:
+                #return configuration
+        #else:
             raise NotImplementedError
