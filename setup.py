@@ -1,6 +1,8 @@
 """setup.py file."""
 
 import uuid
+import pathlib
+import pkg_resources
 
 from setuptools import setup, find_packages
 try: # for pip >= 10
@@ -10,8 +12,12 @@ except ImportError: # for pip <= 9.0.3
 
 __author__ = 'Tim Raphael <raphael.timothy@gmail.com>'
 
-install_reqs = parse_requirements('requirements.txt', session=uuid.uuid1())
-reqs = [str(ir.req) for ir in install_reqs]
+with pathlib.Path('requirements.txt').open() as requirements_txt:
+    reqs = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
 setup(
     name="napalm-exos",
